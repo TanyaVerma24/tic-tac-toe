@@ -16,18 +16,18 @@ let winPatterns = [
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (box.innerText === "") {
-      console.log(currentPlayer)
+      console.log(currentPlayer);
       if (currentPlayer === "x") {
         box.innerText = "x";
         box.classList.add("x");
-        box.classList.remove("o")
+        box.classList.remove("o");
         currentPlayer = "o";
         box.style.backgroundColor = "#ADA0A6";
       } else {
         box.innerText = "o";
         box.classList.add("o");
         currentPlayer = "x";
-        box.classList.remove("x")
+        box.classList.remove("x");
 
         box.style.backgroundColor = "#ADA0A6";
       }
@@ -36,6 +36,7 @@ boxes.forEach((box) => {
     // draw();
   });
 });
+
 let disabledBox = () => {
   boxes.forEach((box) => {
     box.classList.add("disabled");
@@ -52,24 +53,41 @@ checkWinner = () => {
       if (pos1val === pos2val && pos2val === pos3val) {
         console.log("winner", pos1val);
         showWinner(pos1val);
-
+        return;
       }
-
     }
+  
   }
+
+let isBoardFull = true;
+boxes.forEach((box) => {
+  if (box.innerText === "") {
+    isBoardFull = false; // There's at least one empty spot
+  }
+});
+
+if (isBoardFull) {
+  showDraw();
+}
 };
+
 playBtn.addEventListener("click", () => {
   boxes.forEach((box) => {
     box.innerText = " ";
     box.style.backgroundColor = "";
     box.classList.remove("disabled");
     msgContainer.classList.add("hide");
-    currentPlayer="x"
-
+    currentPlayer = "x";
   });
 });
 const showWinner = (winner) => {
-  msg.innerText = `Congarts 🎉!! Winner is ${winner} `;
+  msg.innerText = `Congrats 🎉!! Winner is ${winner} `;
+  msgContainer.classList.remove("hide");
+  disabledBox();
+};
+
+const showDraw = () => {
+  msg.innerText = "It's a Draw! 😕";
   msgContainer.classList.remove("hide");
   disabledBox();
 };
